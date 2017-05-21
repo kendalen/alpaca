@@ -1824,9 +1824,10 @@
          * Triggered when the field is being concealed as the result of a dependency or conditional calculation
          * that has determined that the field should be hidden.
          */
-        onDependentConceal: function()
+        onDependentConceal: function(keepValue)
         {
-
+            if (!keepValue)
+                this.setValue("");
         },
 
         /**
