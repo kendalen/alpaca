@@ -3138,7 +3138,7 @@
 
         if (typeof(propertyIdOrReferenceId) === "string")
         {
-            if (propertyIdOrReferenceId.indexOf("#/") === 0 && propertyId.length > 2)
+            if (propertyIdOrReferenceId.indexOf("#/") === 0 && propertyIdOrReferenceId.length > 2)
             {
                 // TODO: path based lookup?
             }
