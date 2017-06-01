@@ -102,6 +102,7 @@ var paths = {
             "src/js/fields/advanced/PhoneField.js",
             "src/js/fields/advanced/PickAColorField.js",
             "src/js/fields/advanced/SearchField.js",
+            "src/js/fields/advanced/SliderField.js",
             "src/js/fields/advanced/StateField.js",
             "src/js/fields/advanced/SummernoteField.js",
             "src/js/fields/advanced/TableField.js",
