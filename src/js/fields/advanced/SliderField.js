@@ -34,9 +34,17 @@
 	        this.base(function() {
 
 	            if (!Alpaca.isEmpty(self.schema.maximum) && !Alpaca.isEmpty(self.schema.minimum)) {
-	                self.options.measureUnitPosition = self.options.measureUnitPosition ? self.options.measureUnitPosition : "after";
-	                self._manageMeasureUnit("Before");
-	            	$("<br/><b>" + self.schema.minimum + "&nbsp;&nbsp;&nbsp;</b>").insertBefore(self.control);
+	            	self.options.measureUnitPosition = self.options.measureUnitPosition ? self.options.measureUnitPosition : "after";
+	                inner_control = self.control;
+	                $.each(self.control, function() {
+	                	var v = $(this);
+	                	if (v.is("input")) {
+	                		inner_control = v;
+	                		return false;
+	                	}
+	                });
+	                self._manageMeasureUnit("Before", inner_control);
+	            	$("<br/><b>" + self.schema.minimum + "&nbsp;&nbsp;&nbsp;</b>").insertBefore(inner_control);
 	                var val = self.getValue(), commaIdx = val.indexOf(",");
 	                self.isRanged = commaIdx > 0  || Alpaca.isArray(val) || self.options.ranged;
 	                if (self.isRanged) {
@@ -45,22 +53,22 @@
 	                    for (var i=0; i<val.length; i++)
 	                        val[i] = parseInt(val[i]);
 	                };
-	                self.bootstrapSlider = self.control.slider({
+	                self.bootstrapSlider = inner_control.slider({
 	                	value: val,
 	                    min: self.schema.minimum,
 	                    max: self.schema.maximum
 	                });
-	                $("<b>&nbsp;&nbsp;&nbsp;" + self.schema.maximum + "</b>").insertBefore(self.control);
-	                if (!self.isRanged && self.options.showInputField) self.control.css("display", "block");
-	                self._manageMeasureUnit("After");
+	                $("<b>&nbsp;&nbsp;&nbsp;" + self.schema.maximum + "</b>").insertBefore(inner_control);
+	                if (!self.isRanged && self.options.showInputField) inner_control.css("display", "block");
+	                self._manageMeasureUnit("After", inner_control);
 	            }
 	            callback();
 	        });
 	    },
 
-	    _manageMeasureUnit: function(position) {
+	    _manageMeasureUnit: function(position, control) {
 	        if (this.options.measureUnitType && this.options.measureUnitPosition && this.options.measureUnitPosition.toUpperCase()==position.toUpperCase()) 
-	            $('<span class="wedoo-measureUnit wedoo-measureUnitType-' + this.options.measureUnitType + '"></span>')["insert"+position](this.control);
+	            $('<span class="wedoo-measureUnit wedoo-measureUnitType-' + this.options.measureUnitType + '"></span>')["insert"+position](control);
 	    },
 
 	    getSchemaOfOptions: function() {
